@@ -1,0 +1,34 @@
+package helper
+
+import "strings"
+
+type Respone struct {
+	Status  bool        `json:"status"`
+	Message string      `json:"message"`
+	Error   interface{} `json:"error"`
+	Data    interface{} `json:"data"`
+}
+
+type EmptyObj struct{}
+
+func BuildResponse(status bool, message string, data interface{}) Respone {
+	res := Respone{
+		Status:  status,
+		Message: message,
+		Error:   nil,
+		Data:    data,
+	}
+	return res
+}
+
+func BuildErrorResponse(message string, err string, data interface{}) Respone {
+	splittedError := strings.Split(err, "\n")
+	res := Respone{
+		Status:  false,
+		Message: message,
+		Error:   splittedError,
+		Data:    data,
+	}
+
+	return res
+}
