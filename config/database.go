@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/SOMONSOUM/go-fiber/entity"
+	"github.com/SOMONSOUM/go-fiber/models"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -32,7 +32,7 @@ func SetupDatabaseConnection() *gorm.DB {
 	}
 
 	// TODO: Add all migrations
-	db.AutoMigrate(&entity.User{})
+	db.AutoMigrate(&models.User{})
 
 	return db
 }
