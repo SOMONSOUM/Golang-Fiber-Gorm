@@ -5,7 +5,9 @@ import (
 	"os"
 
 	"github.com/SOMONSOUM/go-fiber/config"
+	"github.com/SOMONSOUM/go-fiber/routes"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"gorm.io/gorm"
 )
 
@@ -15,19 +17,11 @@ func main() {
 	defer config.CloseDatabaseConnection(db)
 	app := fiber.New()
 
-	authRoutes := app.Group("api/auth")
-	{
-		authRoutes.Get("/users", func(c *fiber.Ctx) error {
-			return c.JSON("All users")
-		})
-		authRoutes.Get("/register", func(c *fiber.Ctx) error {
-			return c.JSON("Signup")
-		})
-	}
+	app.Use(cors.New(cors.Config{
+		AllowCredentials: true,
+	}))
 
-	app.Get("/", func(c *fiber.Ctx) error {
-		return c.JSON("Hello, World👋!")
-	})
+	routes.SetupRoutes(app)
 
 	log.Fatal(app.Listen(os.Getenv("PORT")))
 }
