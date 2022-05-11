@@ -32,7 +32,7 @@ func SetupDatabaseConnection() *gorm.DB {
 	}
 
 	// TODO: Add all migrations
-	db.AutoMigrate(&models.User{})
+	db.AutoMigrate(&models.User{}, &models.Claims{})
 
 	return db
 }

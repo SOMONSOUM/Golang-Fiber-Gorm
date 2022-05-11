@@ -23,5 +23,10 @@ func main() {
 
 	routes.SetupRoutes(app)
 
+	// 404 Handler
+	app.Use(func(c *fiber.Ctx) error {
+		return c.SendStatus(404)
+	})
+
 	log.Fatal(app.Listen(os.Getenv("PORT")))
 }
